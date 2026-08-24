@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batohack | Portfolio Cybersécurité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090c1f;
+    --bg2: #10153a;
+    --panel: #131a4a;
+    --line: #2a3170;
+    --text: #eef0ff;
+    --muted: #9aa1d4;
+    --cyan: #00e6ff;
+    --magenta: #ff3d81;
+    --lime: #c6ff3d;
+    --grad: linear-gradient(120deg, var(--cyan), var(--magenta));
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--magenta);color:#fff;}
+  a{color:var(--cyan);text-decoration:none;}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+  .bg-grid{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,230,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,230,255,0.05) 1px, transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .orb{
+    position:absolute;border-radius:50%;filter:blur(70px);opacity:0.35;pointer-events:none;z-index:0;
+    animation:float 12s ease-in-out infinite;
+  }
+  .orb1{width:340px;height:340px;background:var(--cyan);top:-80px;right:-60px;}
+  .orb2{width:280px;height:280px;background:var(--magenta);top:220px;left:-90px;animation-delay:2.5s;}
+  @keyframes float{
+    0%,100%{transform:translateY(0) translateX(0);}
+    50%{transform:translateY(-26px) translateX(14px);}
+  }
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+
+  header.masthead{
+    position:sticky;top:0;z-index:50;
+    background:rgba(9,12,31,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .masthead .wrap{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;}
+  .brand{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:0.02em;}
+  .brand .dot{color:var(--magenta);}
+  nav.tabs{display:flex;gap:22px;flex-wrap:wrap;}
+  nav.tabs a{
+    font-size:12.5px;font-weight:500;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.06em;
+    position:relative;padding-bottom:5px;
+  }
+  nav.tabs a::after{
+    content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;
+    background:var(--grad);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s ease;
+  }
+  nav.tabs a:hover{color:var(--text);}
+  nav.tabs a:hover::after{transform:scaleX(1);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* tilt + spotlight cards */
+  .tilt{
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform .15s ease, border-color .2s ease;
+    will-change:transform;
+  }
+  .tilt::before{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(0,230,255,0.14), transparent 60%);
+    opacity:0;transition:opacity .25s ease;pointer-events:none;
+  }
+  .tilt:hover::before{opacity:1;}
+
+  /* HERO */
+  .hero{padding:110px 0 90px;position:relative;}
+  .hero .kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;
+    color:var(--lime);text-transform:uppercase;
+    border:1px solid rgba(198,255,61,0.35);
+    background:rgba(198,255,61,0.06);
+    padding:6px 14px;border-radius:999px;
+    margin-bottom:26px;
+  }
+  .hero .kicker .pulse{
+    width:7px;height:7px;border-radius:50%;background:var(--lime);
+    box-shadow:0 0 0 0 rgba(198,255,61,0.7);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(198,255,61,0.6);}
+    70%{box-shadow:0 0 0 9px rgba(198,255,61,0);}
+    100%{box-shadow:0 0 0 0 rgba(198,255,61,0);}
+  }
+
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(46px, 8vw, 92px);
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    background:var(--grad);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:sheen 5s linear infinite;
+  }
+  @keyframes sheen{
+    0%{background-position:0% center;}
+    100%{background-position:200% center;}
+  }
+  .hero h2.role{
+    font-family:var(--font-display);
+    font-size:clamp(18px, 2.4vw, 24px);
+    font-weight:500;
+    color:var(--text);
+    margin-top:16px;
+  }
+  .hero h2.role .who{color:var(--muted);font-weight:400;display:block;font-size:14px;margin-bottom:4px;font-family:var(--font-mono);letter-spacing:0.03em;}
+  .hero p.lede{
+    max-width:56ch;margin-top:22px;
+    color:var(--muted);font-size:16.5px;
+  }
+  .hero .cta-row{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-mono);font-size:13px;font-weight:500;
+    padding:13px 24px;border-radius:8px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary{background:var(--grad);color:#0a0a14;font-weight:700;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,230,255,0.22);}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+
+  /* SECTIONS */
+  section{padding:76px 0;border-top:1px solid var(--line);position:relative;}
+  .section-head{margin-bottom:40px;}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:12px;color:var(--cyan);
+    letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .section-title{
+    font-family:var(--font-display);font-size:clamp(26px,3.6vw,38px);
+    font-weight:700;
+  }
+
+  /* PROFIL folder */
+  .folder{
+    background:var(--paper, #e9e4d6);
+    color:#1b1f22;
+    padding:36px 38px;
+    position:relative;
+    border-radius:4px;
+    box-shadow:6px 6px 0 rgba(0,0,0,0.35);
+  }
+  .folder::before{
+    content:'DOSSIER PERSONNEL';
+    position:absolute;top:-13px;left:24px;
+    background:var(--magenta);color:#fff;
+    font-family:var(--font-mono);font-size:10px;font-weight:700;
+    letter-spacing:0.12em;padding:4px 10px;border-radius:3px;
+  }
+  .folder p{font-size:16px;margin-bottom:14px;}
+  .folder .field{
+    display:grid;grid-template-columns:150px 1fr;
+    gap:8px 14px;font-family:var(--font-mono);font-size:13px;
+    margin-top:22px;padding-top:18px;border-top:1px dashed #cfc9b8;
+  }
+  .folder .field dt{color:#2f6862;font-weight:600;}
+  .folder .field dd{color:#1b1f22;}
+
+  /* EXPERIENCE */
+  .exp-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border-radius:16px;overflow:hidden;border:1px solid var(--line);}
+  .exp-card{background:var(--panel);padding:26px 28px;}
+  .exp-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .exp-head h3{font-family:var(--font-display);font-size:18px;font-weight:600;}
+  .exp-head .when{font-family:var(--font-mono);font-size:12px;color:var(--cyan);white-space:nowrap;}
+  .exp-org{font-family:var(--font-mono);font-size:12.5px;color:var(--lime);margin-bottom:12px;}
+  .exp-card ul{padding-left:18px;color:var(--muted);font-size:14.5px;display:flex;flex-direction:column;gap:6px;}
+  .exp-card li::marker{color:var(--magenta);}
+
+  /* FLAGSHIP PROJECT with animated gradient border */
+  .flagship-border{
+    padding:1.5px;border-radius:21px;
+    background:linear-gradient(120deg, var(--cyan), var(--magenta), var(--lime), var(--cyan));
+    background-size:300% 300%;
+    animation:borderMove 7s ease infinite;
+  }
+  @keyframes borderMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+  .flagship{
+    background:linear-gradient(155deg, var(--panel), var(--bg2));
+    border-radius:20px;
+    padding:44px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .flagship::before{
+    content:'';position:absolute;top:-40%;right:-15%;
+    width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,61,129,0.22), transparent 70%);
+    pointer-events:none;
+  }
+  .flagship-tag{
+    display:inline-block;font-family:var(--font-mono);font-size:11px;
+    color:var(--magenta);border:1px solid rgba(255,61,129,0.4);
+    background:rgba(255,61,129,0.08);
+    padding:4px 12px;border-radius:999px;margin-bottom:18px;letter-spacing:0.08em;
+  }
+  .flagship h3{font-family:var(--font-display);font-size:clamp(22px,3vw,30px);margin-bottom:14px;max-width:24ch;}
+  .flagship p{color:var(--muted);max-width:66ch;margin-bottom:28px;font-size:15.5px;}
+  .flagship .stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+  .flagship .stack span{
+    font-family:var(--font-mono);font-size:12px;color:var(--cyan);
+    border:1px solid rgba(0,230,255,0.35);padding:4px 11px;border-radius:6px;
+    transition:background .2s ease;
+  }
+  .flagship .stack span:hover{background:rgba(0,230,255,0.1);}
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+  .stat{background:var(--bg2);padding:24px 18px;text-align:center;transition:transform .2s ease;}
+  .stat:hover{transform:translateY(-4px);}
+  .stat .num{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(26px,4vw,38px);
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .stat .label{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);margin-top:8px;letter-spacing:0.02em;}
+  @media (max-width:640px){.stat-grid{grid-template-columns:1fr;}}
+
+  /* SKILLS */
+  .skill-group{margin-bottom:34px;}
+  .skill-group h4.cat{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--lime);
+    text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;
+  }
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);
+    padding:8px 14px;border-radius:8px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .chip:hover{border-color:var(--cyan);transform:translateY(-2px);}
+
+  /* PROJECTS */
+  .grid-projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .proj-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:26px;display:flex;flex-direction:column;gap:12px;
+  }
+  .proj-card .tag{
+    font-family:var(--font-mono);font-size:11px;color:var(--lime);
+    letter-spacing:0.06em;text-transform:uppercase;
+  }
+  .proj-card h4{font-size:17px;font-weight:600;}
+  .proj-card p{color:var(--muted);font-size:14px;flex:1;}
+
+  /* CERTIFICATIONS */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+  .cert-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .cert-card h4{font-family:var(--font-mono);font-size:13px;color:var(--cyan);margin-bottom:12px;letter-spacing:0.04em;}
+  .cert-card ul{padding-left:18px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:6px;}
+  .cert-card li::marker{color:var(--lime);}
+
+  /* EDUCATION */
+  .timeline{border-left:2px solid var(--line);padding-left:30px;display:flex;flex-direction:column;gap:34px;}
+  .tl-item{position:relative;}
+  .tl-item::before{
+    content:'';position:absolute;left:-37px;top:4px;width:12px;height:12px;border-radius:50%;
+    background:var(--grad);
+  }
+  .tl-item .when{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:0.06em;}
+  .tl-item h3{font-size:18px;font-weight:600;margin:6px 0;font-family:var(--font-display);}
+  .tl-item p{color:var(--muted);font-size:14.5px;}
+
+  /* CONTACT */
+  .contact-panel{
+    background:linear-gradient(120deg, rgba(0,230,255,0.1), rgba(255,61,129,0.1));
+    border:1px solid var(--line);border-radius:20px;
+    padding:50px 44px;text-align:center;
+  }
+  .contact-panel h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);margin-bottom:16px;}
+  .contact-panel p{color:var(--muted);max-width:50ch;margin:0 auto 30px;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero .kicker .pulse, .hero h1, .orb, .flagship-border{animation:none;}
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">Batohack<span class="dot">.</span></div>
+    <nav class="tabs">
+      <a href="#profil">Profil</a>
+      <a href="#experience">Expérience</a>
+      <a href="#projet">Projet phare</a>
+      <a href="#competences">Compétences</a>
+      <a href="#autres">Projets</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#parcours">Formation</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="profil" style="border-top:none;">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="kicker"><span class="pulse"></span> Disponible pour un stage en cybersécurité</div>
+    <h1>Batohack</h1>
+    <h2 class="role"><span class="who">Dorian Batosine Tchouho</span>Pentester &amp; Développeur Cybersécurité</h2>
+    <p class="lede">Étudiant en Bachelor Réseau et Sécurité Informatique à l'Institut Supérieur Keyce, à Yaoundé. Je combine pentesting, durcissement de systèmes et développement pour construire des architectures de sécurité concrètes, du Zero Trust à l'automatisation cloud.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projet">Voir le projet phare</a>
+      <a class="btn btn-ghost" href="https://github.com/Batohack" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/dorian-batosine-ab8098322" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <section id="profil-detail" class="reveal">
+    <div class="folder">
+      <p>Je suis un passionné de cybersécurité et de développement, avec une forte orientation vers la protection des systèmes et des données. Mon objectif est de contribuer à la sécurité informatique en combinant mes compétences techniques et mon engagement dans des projets concrets.</p>
+      <dl class="field">
+        <dt>Nom</dt><dd>Batosine Tchouho Dorian</dd>
+        <dt>Alias</dt><dd>Batohack</dd>
+        <dt>Formation</dt><dd>Bachelor Réseau et Sécurité Informatique, Institut Supérieur Keyce</dd>
+        <dt>Engagements</dt><dd>Trésorier National de l'association Espoir et Vie, athlète compétiteur en judo</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head reveal">
+      <span class="eyebrow">Expérience</span>
+      <h2 class="section-title">Stages, projets tutorés &amp; hackathons</h2>
+    </div>
+    <div class="exp-list reveal">
+      <div class="exp-card tilt">
+        <div class="exp-head"><h3>Stagiaire en cybersécurité et IA</h3><span class="when">11/2025 à 01/2026</span></div>
+        <div class="exp-org">Colorix Communication &amp; Print · Yaoundé</div>
+        <ul>
+          <li>Développement d'un agent d'intelligence artificielle pour l'automatisation et la gestion intelligente des devis clients.</li>
+          <li>Réalisation de missions de pentesting grey box et de durcissement (hardening) du parc informatique.</li>
+        </ul>
+      </div>
+      <div class="exp-card tilt">
+        <div class="exp-head"><h3>Stagiaire en réseau et télécommunication</h3><span class="when">08/2024 à 10/2024</span></div>
+        <div class="exp-org">ETC Sarl · Yaoundé</div>
+        <ul>
+          <li>Développement de compétences en réseau et télécommunication, incluant l'installation et la maintenance de fibres optiques.</li>
+        </ul>
+      </div>
+      <div class="exp-card tilt">
+        <div class="exp-head"><h3>Chef d'équipe, projet tutoré</h3><span class="when">2024 à 2025</span></div>
+        <div class="exp-org">Institut Supérieur Keyce · Yaoundé</div>
+        <ul>
+          <li>Déploiement d'une API REST sécurisée sous Docker, garantissant l'intégrité et la confidentialité des données.</li>
+        </ul>
+      </div>
+      <div class="exp-card tilt">
+        <div class="exp-head"><h3>Hackathon IndabaX Cameroun</h3><span class="when">04/2025</span></div>
+        <div class="exp-org">JFN Hightech University Institute · Douala</div>
+        <ul>
+          <li>Participation au hackathon national sur le thème de l'IA pour le développement durable, le patrimoine culturel et la croissance économique au Cameroun.</li>
+          <li>Conception d'un dashboard interactif Python pour l'analyse de données de campagnes de don de sang.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projet">
+    <div class="section-head reveal">
+      <span class="eyebrow">Projet de fin d'études</span>
+      <h2 class="section-title">Architecture Zero Trust pour Colorix Communication &amp; Print</h2>
+    </div>
+    <div class="flagship-border reveal">
+    <div class="flagship tilt">
+      <span class="flagship-tag">Mémoire de licence (2025/2026)</span>
+      <h3>Sécuriser une chaîne de production graphique contre le mouvement latéral et l'exfiltration de propriété intellectuelle</h3>
+      <p>L'imprimerie Colorix accordait une confiance implicite à tout équipement connecté à son réseau, exposant ses maquettes et fichiers de production à un risque élevé. Ce mémoire conçoit et déploie une architecture Zero Trust complète, structurée selon le modèle NIST, testée dans un laboratoire reproduisant l'infrastructure réelle de l'entreprise.</p>
+      <div class="stack">
+        <span>Keycloak (IAM)</span>
+        <span>Open Policy Agent</span>
+        <span>pfSense</span>
+        <span>Wazuh (SIEM)</span>
+        <span>Shuffle (SOAR)</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="num">100%</div>
+          <div class="label">des tentatives de mouvement latéral bloquées</div>
+        </div>
+        <div class="stat">
+          <div class="num">0,076s</div>
+          <div class="label">temps moyen de détection d'un accès non autorisé</div>
+        </div>
+        <div class="stat">
+          <div class="num">6,8s</div>
+          <div class="label">pour couper un accès compromis, contre environ 2 minutes en manuel</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="competences">
+    <div class="section-head reveal">
+      <span class="eyebrow">Compétences</span>
+      <h2 class="section-title">Ce que je sais faire</h2>
+    </div>
+    <div class="reveal">
+      <div class="skill-group">
+        <h4 class="cat">Cybersécurité</h4>
+        <div class="chip-row">
+          <span class="chip">Pentesting Grey Box</span>
+          <span class="chip">Hardening</span>
+          <span class="chip">OSINT</span>
+          <span class="chip">pfSense · UFW</span>
+          <span class="chip">GNS3 · VoIP (SIP)</span>
+          <span class="chip">ISO 27001 (concepts)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4 class="cat">Développement</h4>
+        <div class="chip-row">
+          <span class="chip">Python</span>
+          <span class="chip">Bash</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">SQL</span>
+          <span class="chip">React JS</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">React Native</span>
+          <span class="chip">CI/CD Jenkins</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4 class="cat">Cloud &amp; DevOps</h4>
+        <div class="chip-row">
+          <span class="chip">Linux</span>
+          <span class="chip">Windows Server 2022 (AD, DNS)</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">Terraform</span>
+          <span class="chip">Azure</span>
+          <span class="chip">GCP</span>
+          <span class="chip">AWS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="autres">
+    <div class="section-head reveal">
+      <span class="eyebrow">Projets</span>
+      <h2 class="section-title">Réalisations techniques</h2>
+    </div>
+    <div class="grid-projects reveal">
+      <div class="proj-card tilt">
+        <span class="tag">React · Vite · TypeScript</span>
+        <h4>Cabinet TCHOUHO</h4>
+        <p>Site vitrine pour un cabinet d'avocat, interface fluide et responsive construite avec React, Vite et Tailwind CSS, déployée sur Vercel.</p>
+        <a class="btn btn-ghost" href="https://github.com/Batohack/metchouhowebsite" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">Python · FastAPI</span>
+        <h4>Colorix Agent IA</h4>
+        <p>Agent intelligent pour l'entreprise Colorix, avec gestion de factures, messagerie et base de données, en lien avec le projet Zero Trust.</p>
+        <a class="btn btn-ghost" href="https://github.com/otbludo/colorix_agent_ia" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">Django · Machine Learning</span>
+        <h4>Don de Sang</h4>
+        <p>Application de gestion des donneurs de sang avec prédiction d'éligibilité par machine learning et géolocalisation, réalisée en équipe (CodeStorm).</p>
+        <a class="btn btn-ghost" href="https://github.com/AymerickVick/Projet_De_Dn_Sang_CodeStorm" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">Nmap · Metasploit</span>
+        <h4>Audit et pentesting</h4>
+        <p>Laboratoire de sécurité offensive avec tests d'intrusion pour l'identification de vulnérabilités et mise en place de stratégies de durcissement sur Linux et Windows.</p>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">Terraform · Kubernetes</span>
+        <h4>Infrastructure multi cloud</h4>
+        <p>Déploiement automatisé d'architectures Kubernetes sur Azure (AKS) et GCP, avec configuration de load balancers pour la disponibilité des services.</p>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">Bash · YAD · Fedora</span>
+        <h4>Monitoring SOC</h4>
+        <p>Dashboard de surveillance de processus Linux développé en Bash, optimisé pour la détection de comportements anormaux sur les hôtes.</p>
+      </div>
+      <div class="proj-card tilt">
+        <span class="tag">GNS3 · FreePBX · Asterisk</span>
+        <h4>Infrastructure VoIP sécurisée</h4>
+        <p>Déploiement d'une solution VoIP complète avec FreePBX, Asterisk et Jitsi Meet, incluant la segmentation réseau des flux de communication en temps réel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="section-head reveal">
+      <span class="eyebrow">Certifications</span>
+      <h2 class="section-title">Formations complémentaires</h2>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <h4>Cisco Networking Academy</h4>
+        <ul>
+          <li>Ethical Hacking (en cours de finalisation)</li>
+          <li>Introduction à la cybersécurité</li>
+          <li>Les bases du matériel informatique</li>
+        </ul>
+      </div>
+      <div class="cert-card">
+        <h4>Microsoft Learn</h4>
+        <ul>
+          <li>Introduction à GitHub</li>
+          <li>Build cybersecurity resilience in K12 classrooms with Microsoft tools</li>
+          <li>Résoudre les problèmes de réseau local et hybride</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="parcours">
+    <div class="section-head reveal">
+      <span class="eyebrow">Formation</span>
+      <h2 class="section-title">Parcours académique</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="when">2023 à 2026</div>
+        <h3>Bachelor Réseau et Sécurité Informatique</h3>
+        <p>Institut Supérieur Keyce Informatique et Management, Yaoundé. Première et deuxième années validées avec mention Bien. Mémoire de fin d'études sur une architecture Zero Trust appliquée à une PME industrielle.</p>
+      </div>
+      <div class="tl-item">
+        <div class="when">2016 à 2023</div>
+        <h3>Baccalauréat scientifique, spécialité mathématiques et sciences physiques</h3>
+        <p>Lycée de Nkolmesseng, Yaoundé.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-panel reveal">
+      <h2>Discutons de ton prochain projet de sécurité</h2>
+      <p>Ouvert aux opportunités de stage en cybersécurité, réseaux ou architectures Zero Trust.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/dorian-batosine-ab8098322" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn btn-ghost" href="https://github.com/Batohack" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn btn-ghost" href="mailto:batodorian3@gmail.com">Email ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Batohack — Portfolio 2026</span>
+  <span>github.com/Batohack</span>
+</footer>
+
+<script>
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // tilt + spotlight
+  const tiltEls = document.querySelectorAll('.tilt');
+  tiltEls.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const cx = x / r.width - 0.5;
+      const cy = y / r.height - 0.5;
+      el.style.setProperty('--mx', x + 'px');
+      el.style.setProperty('--my', y + 'px');
+      el.style.transform = `perspective(700px) rotateX(${(-cy*6).toFixed(2)}deg) rotateY(${(cx*6).toFixed(2)}deg) translateY(-2px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateY(0)';
+    });
+  });
+</script>
+
+</body>
+</html>
