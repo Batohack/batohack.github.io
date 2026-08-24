@@ -569,6 +569,18 @@
 
   footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 
+  .scroll-top{
+    position:fixed; right:22px; bottom:22px; z-index:80;
+    width:52px; height:52px; border-radius:50%;
+    border:1px solid rgba(125,211,252,0.35); background:rgba(6,12,22,0.82);
+    color:var(--text); box-shadow:0 14px 30px rgba(0,0,0,0.28);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:22px; cursor:pointer; opacity:0; pointer-events:none;
+    transform:translateY(12px); transition:opacity .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .scroll-top.visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .scroll-top:hover{border-color:var(--cyan); transform:translateY(-2px);}
+
   @keyframes navSlideIn{
     from{opacity:0; transform:translateY(-12px) scale(.98);} 
     to{opacity:1; transform:translateY(0) scale(1);} 
@@ -718,7 +730,7 @@
     <div class="folder">
       <p>Je suis un passionné de cybersécurité et de développement, avec une forte orientation vers la protection des systèmes et des données. Mon objectif est de contribuer à la sécurité informatique en combinant mes compétences techniques et mon engagement dans des projets concrets.</p>
       <dl class="field">
-        <dt>Nom</dt><dd>Batosine Tchouho Dorian</dd>
+        <dt>Nom</dt><dd>BATOSINE TCHOUHO Dorian</dd>
         <dt>Alias</dt><dd>Batohack</dd>
         <dt>Formation</dt><dd>Bachelor Réseau et Sécurité Informatique, Institut Supérieur Keyce</dd>
         <dt>Engagements</dt><dd>Trésorier National de l'association Espoir et Vie, athlète compétiteur en judo</dd>
@@ -1028,6 +1040,8 @@
   </div>
 </main>
 
+<button class="scroll-top" type="button" aria-label="Retour en haut">↑</button>
+
 <footer class="wrap">
   <span>Batohack — Portfolio 2026</span>
   <span>github.com/Batohack</span>
@@ -1062,9 +1076,26 @@
   const portraitCard = document.getElementById('portraitCard');
   const identityOverlay = document.getElementById('identityOverlay');
   const identityClose = document.querySelector('.identity-close');
+  const scrollTopBtn = document.querySelector('.scroll-top');
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.tabs');
   const themeToggle = document.querySelector('.theme-toggle');
+
+  if (scrollTopBtn) {
+    const toggleScrollButton = () => {
+      if (window.scrollY > 350) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    };
+
+    toggleScrollButton();
+    window.addEventListener('scroll', toggleScrollButton, { passive: true });
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   if (portraitCard && identityOverlay) {
     const openOverlay = () => {
