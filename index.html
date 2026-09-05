@@ -103,23 +103,24 @@
   .brand{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:0.02em;white-space:nowrap;}
   .brand .dot{color:var(--magenta);}
   .header-actions{display:flex;align-items:center;gap:12px; margin-left:auto;}
-  .menu-toggle, .theme-toggle{
+  .menu-toggle, .theme-toggle, .lang-toggle{
     background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     backdrop-filter:blur(6px);
   }
-  .menu-toggle, .theme-toggle{
+  .menu-toggle, .theme-toggle, .lang-toggle{
     display:none; width:42px; height:42px; border-radius:10px;
     border:1px solid var(--line); background:rgba(255,255,255,0.02);
     color:var(--text); font-size:20px; cursor:pointer;
     align-items:center; justify-content:center;
     transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
   }
-  .menu-toggle:hover, .theme-toggle:hover{
+  .menu-toggle:hover, .theme-toggle:hover, .lang-toggle:hover{
     transform:translateY(-1px);
     border-color:var(--cyan);
     box-shadow:0 8px 18px rgba(29,127,232,0.12);
   }
-  .theme-toggle{display:inline-flex;}
+  .theme-toggle, .lang-toggle{display:inline-flex;}
+  .lang-toggle{font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:0.03em;}
   nav.tabs{display:flex;gap:22px;flex-wrap:wrap;}
   nav.tabs a{
     font-size:12.5px;font-weight:500;color:var(--muted);
@@ -402,6 +403,7 @@
     font-family:var(--font-mono);font-size:10px;font-weight:700;
     letter-spacing:0.12em;padding:4px 10px;border-radius:999px;
   }
+  body.lang-english .folder::before{content:'PERSONAL FILE';}
   .folder p{font-size:16px;margin-bottom:14px;color:var(--muted);}
   .folder .field{
     display:grid;grid-template-columns:150px 1fr;
@@ -724,6 +726,23 @@
     .contact-panel{padding:22px 14px;}
   }
 
+  /* i18n */
+  .lang-en{display:none;}
+  body.lang-english .lang-fr{display:none;}
+  body.lang-english .lang-en{display:inline;}
+
+  /* FLAGSHIP diagram */
+  .flagship-diagram{
+    margin:4px 0 32px; border-radius:16px; overflow:hidden;
+    border:1px solid var(--line); background:#fff; box-shadow:var(--shadow-soft);
+  }
+  .flagship-diagram a{display:block;}
+  .flagship-diagram img{display:block; width:100%; height:auto;}
+  .flagship-diagram figcaption{
+    padding:12px 16px; background:var(--bg2); color:var(--muted);
+    font-family:var(--font-mono); font-size:11.5px; text-align:center; border-top:1px solid var(--line);
+  }
+
   @media (prefers-reduced-motion: reduce){
     .hero .kicker .pulse, .hero h1, .orb, .flagship-border{animation:none;}
     html{scroll-behavior:auto;}
@@ -739,17 +758,18 @@
   <div class="wrap">
     <div class="brand">Batohack<span class="dot">.</span></div>
     <div class="header-actions">
+      <button class="lang-toggle" aria-label="Switch to English">FR</button>
       <button class="theme-toggle" aria-label="Changer le thème">☾</button>
       <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
     </div>
     <nav class="tabs" aria-label="Menu principal">
-      <a href="#profil">Profil</a>
-      <a href="#experience">Expérience</a>
-      <a href="#projet">Projet phare</a>
-      <a href="#competences">Compétences</a>
-      <a href="#autres">Projets</a>
+      <a href="#profil"><span class="lang-fr">Profil</span><span class="lang-en">Profile</span></a>
+      <a href="#experience"><span class="lang-fr">Expérience</span><span class="lang-en">Experience</span></a>
+      <a href="#projet"><span class="lang-fr">Projet phare</span><span class="lang-en">Flagship project</span></a>
+      <a href="#competences"><span class="lang-fr">Compétences</span><span class="lang-en">Skills</span></a>
+      <a href="#autres"><span class="lang-fr">Projets</span><span class="lang-en">Projects</span></a>
       <a href="#certifications">Certifications</a>
-      <a href="#parcours">Formation</a>
+      <a href="#parcours"><span class="lang-fr">Formation</span><span class="lang-en">Education</span></a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -762,12 +782,16 @@
     <div class="orb orb2"></div>
     <div class="hero-layout">
       <div>
-        <div class="kicker"><span class="pulse"></span> Disponible pour un stage en cybersécurité</div>
+        <div class="kicker"><span class="pulse"></span> <span class="lang-fr">Disponible pour un stage en cybersécurité</span><span class="lang-en">Available for a cybersecurity internship</span></div>
         <h1>Batohack</h1>
-        <h2 class="role"><span class="who">Dorian Batosine Tchouho</span>Pentester &amp; Développeur Cybersécurité</h2>
-        <p class="lede">Étudiant en Bachelor Réseau et Sécurité Informatique à l'Institut Supérieur Keyce, à Yaoundé. Je combine pentesting, durcissement de systèmes et développement pour construire des architectures de sécurité concrètes, du Zero Trust à l'automatisation cloud.</p>
+        <h2 class="role"><span class="who">Dorian Batosine Tchouho</span><span class="lang-fr">Pentester &amp; Développeur Cybersécurité</span><span class="lang-en">Cybersecurity Pentester &amp; Developer</span></h2>
+        <p class="lede">
+          <span class="lang-fr">Étudiant en Bachelor Réseau et Sécurité Informatique à l'Institut Supérieur Keyce, à Yaoundé. Je combine pentesting, durcissement de systèmes et développement pour construire des architectures de sécurité concrètes, du Zero Trust à l'automatisation cloud.</span>
+          <span class="lang-en">Network &amp; Information Security student at Institut Supérieur Keyce, Yaoundé. I combine pentesting, systems hardening and development to build concrete security architectures, from Zero Trust to cloud automation.</span>
+        </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#projet">Voir le projet phare</a>
+          <a class="btn btn-primary" href="#projet"><span class="lang-fr">Voir le projet phare</span><span class="lang-en">View flagship project</span></a>
+          <a class="btn btn-ghost" href="cv-batosine-tchouho-dorian.pdf" target="_blank" rel="noopener"><span class="lang-fr">Télécharger mon CV</span><span class="lang-en">Download my resume</span></a>
           <a class="btn btn-ghost" href="https://github.com/Batohack" target="_blank" rel="noopener">GitHub</a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/dorian-batosine-ab8098322" target="_blank" rel="noopener">LinkedIn</a>
         </div>
@@ -803,12 +827,15 @@
 
   <section id="profil-detail" class="reveal">
     <div class="folder">
-      <p>Je suis un passionné de cybersécurité et de développement, avec une forte orientation vers la protection des systèmes et des données. Mon objectif est de contribuer à la sécurité informatique en combinant mes compétences techniques et mon engagement dans des projets concrets.</p>
+      <p>
+        <span class="lang-fr">Je suis un passionné de cybersécurité et de développement, avec une forte orientation vers la protection des systèmes et des données. Mon objectif est de contribuer à la sécurité informatique en combinant mes compétences techniques et mon engagement dans des projets concrets.</span>
+        <span class="lang-en">I'm passionate about cybersecurity and development, with a strong focus on protecting systems and data. My goal is to contribute to information security by combining technical skills with hands-on commitment to real projects.</span>
+      </p>
       <dl class="field">
-        <dt>Nom</dt><dd>BATOSINE TCHOUHO Dorian</dd>
+        <dt><span class="lang-fr">Nom</span><span class="lang-en">Name</span></dt><dd>BATOSINE TCHOUHO Dorian</dd>
         <dt>Alias</dt><dd>Batohack</dd>
-        <dt>Formation</dt><dd>Bachelor Réseau et Sécurité Informatique, Institut Supérieur Keyce</dd>
-        <dt>Engagements</dt><dd>Trésorier National de l'association Espoir et Vie, athlète compétiteur en judo</dd>
+        <dt><span class="lang-fr">Formation</span><span class="lang-en">Education</span></dt><dd><span class="lang-fr">Bachelor Réseau et Sécurité Informatique, Institut Supérieur Keyce</span><span class="lang-en">Bachelor's in Network &amp; Information Security, Institut Supérieur Keyce</span></dd>
+        <dt><span class="lang-fr">Engagements</span><span class="lang-en">Commitments</span></dt><dd><span class="lang-fr">Trésorier National de l'association Espoir et Vie, athlète compétiteur en judo</span><span class="lang-en">National Treasurer of the Espoir et Vie association, competitive judo athlete</span></dd>
       </dl>
     </div>
   </section>
@@ -816,20 +843,20 @@
   <section id="impact" class="reveal">
     <div class="section-head">
       <span class="eyebrow">Impact</span>
-      <h2 class="section-title">Ce que j'apporte aux projets</h2>
+      <h2 class="section-title"><span class="lang-fr">Ce que j'apporte aux projets</span><span class="lang-en">What I bring to projects</span></h2>
     </div>
     <div class="metric-row">
       <div class="metric-card">
         <strong>03+</strong>
-        <span>ans d'apprentissage</span>
+        <span><span class="lang-fr">ans d'apprentissage</span><span class="lang-en">years learning</span></span>
       </div>
       <div class="metric-card">
         <strong>07</strong>
-        <span>projets majeurs</span>
+        <span><span class="lang-fr">projets majeurs</span><span class="lang-en">major projects</span></span>
       </div>
       <div class="metric-card">
         <strong>100%</strong>
-        <span>engagement</span>
+        <span><span class="lang-fr">engagement</span><span class="lang-en">commitment</span></span>
       </div>
     </div>
   </section>
@@ -837,68 +864,68 @@
   <section id="opportunites" class="reveal">
     <div class="section-head">
       <span class="eyebrow">Recherche</span>
-      <h2 class="section-title">Je cherche des opportunités concrètes</h2>
+      <h2 class="section-title"><span class="lang-fr">Je cherche des opportunités concrètes</span><span class="lang-en">I'm looking for concrete opportunities</span></h2>
     </div>
     <div class="opportunity-grid">
       <div class="mini-card">
-        <span class="tag">Stage</span>
+        <span class="tag"><span class="lang-fr">Stage</span><span class="lang-en">Internship</span></span>
         <h3>Cybersécurité</h3>
-        <p>Pour consolider mes compétences en pentesting, hardening, sécurité réseau et analyse d'incidents.</p>
+        <p><span class="lang-fr">Pour consolider mes compétences en pentesting, hardening, sécurité réseau et analyse d'incidents.</span><span class="lang-en">To sharpen my skills in pentesting, hardening, network security and incident analysis.</span></p>
       </div>
       <div class="mini-card">
-        <span class="tag">Projet</span>
+        <span class="tag"><span class="lang-fr">Projet</span><span class="lang-en">Project</span></span>
         <h3>Zero Trust</h3>
-        <p>Pour concevoir et déployer des architectures sécurisées en environnement professionnel.</p>
+        <p><span class="lang-fr">Pour concevoir et déployer des architectures sécurisées en environnement professionnel.</span><span class="lang-en">To design and deploy secure architectures in a professional environment.</span></p>
       </div>
       <div class="mini-card">
-        <span class="tag">Collaboration</span>
+        <span class="tag"><span class="lang-fr">Collaboration</span><span class="lang-en">Collaboration</span></span>
         <h3>Innovation</h3>
-        <p>Pour travailler sur des sujets IA, cloud, automatisation et sécurisation des systèmes modernes.</p>
+        <p><span class="lang-fr">Pour travailler sur des sujets IA, cloud, automatisation et sécurisation des systèmes modernes.</span><span class="lang-en">To work on AI, cloud, automation and modern systems security topics.</span></p>
       </div>
     </div>
     <div class="cta-banner">
       <div>
-        <strong>Disponible pour un stage</strong><br>
-        <span>en cybersécurité, infrastructure ou sécurité cloud</span>
+        <strong><span class="lang-fr">Disponible pour un stage</span><span class="lang-en">Available for an internship</span></strong><br>
+        <span><span class="lang-fr">en cybersécurité, infrastructure ou sécurité cloud</span><span class="lang-en">in cybersecurity, infrastructure or cloud security</span></span>
       </div>
-      <a class="btn btn-primary" href="#contact">Me contacter</a>
+      <a class="btn btn-primary" href="#contact"><span class="lang-fr">Me contacter</span><span class="lang-en">Contact me</span></a>
     </div>
   </section>
 
   <section id="experience">
     <div class="section-head reveal">
       <span class="eyebrow">Expérience</span>
-      <h2 class="section-title">Stages, projets tutorés &amp; hackathons</h2>
+      <h2 class="section-title"><span class="lang-fr">Stages, projets tutorés &amp; hackathons</span><span class="lang-en">Internships, supervised projects &amp; hackathons</span></h2>
     </div>
     <div class="exp-list reveal">
       <div class="exp-card tilt">
-        <div class="exp-head"><h3>Stagiaire en cybersécurité et IA</h3><span class="when">11/2025 à 01/2026</span></div>
+        <div class="exp-head"><h3><span class="lang-fr">Stagiaire en cybersécurité et IA</span><span class="lang-en">Cybersecurity &amp; AI Intern</span></h3><span class="when">11/2025 <span class="lang-fr">à</span><span class="lang-en">to</span> 01/2026</span></div>
         <div class="exp-org">Colorix Communication &amp; Print · Yaoundé</div>
         <ul>
-          <li>Développement d'un agent d'intelligence artificielle pour l'automatisation et la gestion intelligente des devis clients.</li>
-          <li>Réalisation de missions de pentesting grey box et de durcissement (hardening) du parc informatique.</li>
+          <li><span class="lang-fr">Développement d'un agent d'intelligence artificielle pour l'automatisation et la gestion intelligente des devis clients.</span><span class="lang-en">Built an AI agent to automate and intelligently manage client quotes.</span></li>
+          <li><span class="lang-fr">Réalisation de missions de pentesting grey box et de durcissement (hardening) du parc informatique.</span><span class="lang-en">Carried out grey-box pentesting engagements and hardened the company's IT fleet.</span></li>
         </ul>
       </div>
       <div class="exp-card tilt">
-        <div class="exp-head"><h3>Stagiaire en réseau et télécommunication</h3><span class="when">08/2024 à 10/2024</span></div>
+        <div class="exp-head"><h3><span class="lang-fr">Stagiaire en réseau et télécommunication</span><span class="lang-en">Networking &amp; Telecom Intern</span></h3><span class="when">08/2024 <span class="lang-fr">à</span><span class="lang-en">to</span> 10/2024</span></div>
         <div class="exp-org">ETC Sarl · Yaoundé</div>
         <ul>
-          <li>Développement de compétences en réseau et télécommunication, incluant l'installation et la maintenance de fibres optiques.</li>
+          <li><span class="lang-fr">Développement de compétences en réseau et télécommunication, incluant l'installation et la maintenance de fibres optiques.</span><span class="lang-en">Built networking and telecom skills, including fiber-optic installation and maintenance.</span></li>
         </ul>
       </div>
       <div class="exp-card tilt">
-        <div class="exp-head"><h3>Chef d'équipe, projet tutoré</h3><span class="when">2024 à 2025</span></div>
+        <div class="exp-head"><h3><span class="lang-fr">Chef d'équipe, projet tutoré</span><span class="lang-en">Team Lead, Supervised Project</span></h3><span class="when">2024 <span class="lang-fr">à</span><span class="lang-en">to</span> 2025</span></div>
         <div class="exp-org">Institut Supérieur Keyce · Yaoundé</div>
         <ul>
-          <li>Déploiement d'une API REST sécurisée sous Docker, garantissant l'intégrité et la confidentialité des données.</li>
+          <li><span class="lang-fr">Déploiement d'une API REST sécurisée sous Docker, garantissant l'intégrité et la confidentialité des données.</span><span class="lang-en">Deployed a secure REST API under Docker, ensuring data integrity and confidentiality.</span></li>
         </ul>
       </div>
       <div class="exp-card tilt">
         <div class="exp-head"><h3>Hackathon IndabaX Cameroun</h3><span class="when">04/2025</span></div>
         <div class="exp-org">JFN Hightech University Institute · Douala</div>
         <ul>
-          <li>Participation au hackathon national sur le thème de l'IA pour le développement durable, le patrimoine culturel et la croissance économique au Cameroun.</li>
-          <li>Conception d'un dashboard interactif Python pour l'analyse de données de campagnes de don de sang.</li>
+          <li><span class="lang-fr">Participation au hackathon national sur le thème de l'IA pour le développement durable, le patrimoine culturel et la croissance économique au Cameroun.</span><span class="lang-en">Took part in the national hackathon on AI for sustainable development, cultural heritage and economic growth in Cameroon.</span></li>
+          <li><span class="lang-fr">Conception d'un dashboard interactif Python pour l'analyse de données de campagnes de don de sang.</span><span class="lang-en">Designed an interactive Python dashboard to analyze blood donation campaign data.</span></li>
         </ul>
       </div>
     </div>
@@ -906,14 +933,17 @@
 
   <section id="projet">
     <div class="section-head reveal">
-      <span class="eyebrow">Projet de fin d'études</span>
-      <h2 class="section-title">Architecture Zero Trust pour Colorix Communication &amp; Print</h2>
+      <span class="eyebrow"><span class="lang-fr">Projet de fin d'études</span><span class="lang-en">Capstone project</span></span>
+      <h2 class="section-title"><span class="lang-fr">Architecture Zero Trust pour Colorix Communication &amp; Print</span><span class="lang-en">Zero Trust architecture for Colorix Communication &amp; Print</span></h2>
     </div>
     <div class="flagship-border reveal">
     <div class="flagship tilt">
-      <span class="flagship-tag">Mémoire de licence (2025/2026)</span>
-      <h3>Sécuriser une chaîne de production graphique contre le mouvement latéral et l'exfiltration de propriété intellectuelle</h3>
-      <p>L'imprimerie Colorix accordait une confiance implicite à tout équipement connecté à son réseau, exposant ses maquettes et fichiers de production à un risque élevé. Ce mémoire conçoit et déploie une architecture Zero Trust complète, structurée selon le modèle NIST, testée dans un laboratoire reproduisant l'infrastructure réelle de l'entreprise.</p>
+      <span class="flagship-tag"><span class="lang-fr">Mémoire de licence (2025/2026)</span><span class="lang-en">Bachelor's thesis (2025/2026)</span></span>
+      <h3><span class="lang-fr">Sécuriser une chaîne de production graphique contre le mouvement latéral et l'exfiltration de propriété intellectuelle</span><span class="lang-en">Securing a print production chain against lateral movement and IP exfiltration</span></h3>
+      <p>
+        <span class="lang-fr">L'imprimerie Colorix accordait une confiance implicite à tout équipement connecté à son réseau, exposant ses maquettes et fichiers de production à un risque élevé. Ce mémoire conçoit et déploie une architecture Zero Trust complète, structurée selon le modèle NIST, testée dans un laboratoire reproduisant l'infrastructure réelle de l'entreprise.</span>
+        <span class="lang-en">Colorix printworks granted implicit trust to any device connected to its network, exposing its design files and production data to high risk. This thesis designs and deploys a complete Zero Trust architecture, structured after the NIST model, tested in a lab replicating the company's real infrastructure.</span>
+      </p>
       <div class="stack">
         <span>Keycloak (IAM)</span>
         <span>Open Policy Agent</span>
@@ -921,18 +951,24 @@
         <span>Wazuh (SIEM)</span>
         <span>Shuffle (SOAR)</span>
       </div>
+      <figure class="flagship-diagram">
+        <a href="architecture-zero-trust-colorix.png" target="_blank" rel="noopener">
+          <img src="architecture-zero-trust-colorix.png" alt="Schéma de l'architecture Zero Trust du laboratoire Colorix : micro-segmentation VLAN, pfSense en Policy Enforcement Point, Keycloak+OPA, Wazuh SIEM" loading="lazy">
+        </a>
+        <figcaption><span class="lang-fr">Schéma du laboratoire — cliquer pour agrandir</span><span class="lang-en">Lab architecture diagram — click to enlarge</span></figcaption>
+      </figure>
       <div class="stat-grid">
         <div class="stat">
           <div class="num">100%</div>
-          <div class="label">des tentatives de mouvement latéral bloquées</div>
+          <div class="label"><span class="lang-fr">des tentatives de mouvement latéral bloquées</span><span class="lang-en">of lateral-movement attempts blocked</span></div>
         </div>
         <div class="stat">
           <div class="num">0,076s</div>
-          <div class="label">temps moyen de détection d'un accès non autorisé</div>
+          <div class="label"><span class="lang-fr">temps moyen de détection d'un accès non autorisé</span><span class="lang-en">average time to detect an unauthorized access</span></div>
         </div>
         <div class="stat">
           <div class="num">6,8s</div>
-          <div class="label">pour couper un accès compromis, contre environ 2 minutes en manuel</div>
+          <div class="label"><span class="lang-fr">pour couper un accès compromis, contre environ 2 minutes en manuel</span><span class="lang-en">to cut off a compromised access, versus ~2 minutes manually</span></div>
         </div>
       </div>
     </div>
@@ -941,8 +977,8 @@
 
   <section id="competences">
     <div class="section-head reveal">
-      <span class="eyebrow">Compétences</span>
-      <h2 class="section-title">Ce que je sais faire</h2>
+      <span class="eyebrow"><span class="lang-fr">Compétences</span><span class="lang-en">Skills</span></span>
+      <h2 class="section-title"><span class="lang-fr">Ce que je sais faire</span><span class="lang-en">What I can do</span></h2>
     </div>
     <div class="reveal">
       <div class="skill-group">
@@ -957,7 +993,7 @@
         </div>
       </div>
       <div class="skill-group">
-        <h4 class="cat">Développement</h4>
+        <h4 class="cat"><span class="lang-fr">Développement</span><span class="lang-en">Development</span></h4>
         <div class="chip-row">
           <span class="chip">Python</span>
           <span class="chip">Bash</span>
@@ -988,46 +1024,46 @@
   <section id="autres">
     <div class="section-head reveal">
       <span class="eyebrow">Projets</span>
-      <h2 class="section-title">Réalisations techniques</h2>
+      <h2 class="section-title"><span class="lang-fr">Réalisations techniques</span><span class="lang-en">Technical work</span></h2>
     </div>
     <div class="grid-projects reveal">
       <div class="proj-card tilt">
         <span class="tag">React · Vite · TypeScript</span>
         <h4>Cabinet TCHOUHO</h4>
-        <p>Site vitrine pour un cabinet d'avocat, interface fluide et responsive construite avec React, Vite et Tailwind CSS, déployée sur Vercel.</p>
-        <a class="btn btn-ghost" href="https://github.com/Batohack/metchouhowebsite" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+        <p><span class="lang-fr">Site vitrine pour un cabinet d'avocat, interface fluide et responsive construite avec React, Vite et Tailwind CSS, déployée sur Vercel.</span><span class="lang-en">Showcase site for a law firm, a fluid and responsive interface built with React, Vite and Tailwind CSS, deployed on Vercel.</span></p>
+        <a class="btn btn-ghost" href="https://github.com/Batohack/metchouhowebsite" target="_blank" rel="noopener" style="align-self:flex-start;"><span class="lang-fr">Voir le code</span><span class="lang-en">View code</span> ↗</a>
       </div>
       <div class="proj-card tilt">
         <span class="tag">Python · FastAPI</span>
         <h4>Colorix Agent IA</h4>
-        <p>Agent intelligent pour l'entreprise Colorix, avec gestion de factures, messagerie et base de données, en lien avec le projet Zero Trust.</p>
-        <a class="btn btn-ghost" href="https://github.com/otbludo/colorix_agent_ia" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+        <p><span class="lang-fr">Agent intelligent pour l'entreprise Colorix, avec gestion de factures, messagerie et base de données, en lien avec le projet Zero Trust.</span><span class="lang-en">Intelligent agent for Colorix, handling invoices, messaging and a database, tied to the Zero Trust project.</span></p>
+        <a class="btn btn-ghost" href="https://github.com/otbludo/colorix_agent_ia" target="_blank" rel="noopener" style="align-self:flex-start;"><span class="lang-fr">Voir le code</span><span class="lang-en">View code</span> ↗</a>
       </div>
       <div class="proj-card tilt">
         <span class="tag">Django · Machine Learning</span>
-        <h4>Don de Sang</h4>
-        <p>Application de gestion des donneurs de sang avec prédiction d'éligibilité par machine learning et géolocalisation, réalisée en équipe (CodeStorm).</p>
-        <a class="btn btn-ghost" href="https://github.com/AymerickVick/Projet_De_Dn_Sang_CodeStorm" target="_blank" rel="noopener" style="align-self:flex-start;">Voir le code ↗</a>
+        <h4><span class="lang-fr">Don de Sang</span><span class="lang-en">Blood Donation</span></h4>
+        <p><span class="lang-fr">Application de gestion des donneurs de sang avec prédiction d'éligibilité par machine learning et géolocalisation, réalisée en équipe (CodeStorm).</span><span class="lang-en">Blood donor management app with machine-learning eligibility prediction and geolocation, built as a team (CodeStorm).</span></p>
+        <a class="btn btn-ghost" href="https://github.com/AymerickVick/Projet_De_Dn_Sang_CodeStorm" target="_blank" rel="noopener" style="align-self:flex-start;"><span class="lang-fr">Voir le code</span><span class="lang-en">View code</span> ↗</a>
       </div>
       <div class="proj-card tilt">
         <span class="tag">Nmap · Metasploit</span>
-        <h4>Audit et pentesting</h4>
-        <p>Laboratoire de sécurité offensive avec tests d'intrusion pour l'identification de vulnérabilités et mise en place de stratégies de durcissement sur Linux et Windows.</p>
+        <h4><span class="lang-fr">Audit et pentesting</span><span class="lang-en">Audit &amp; pentesting</span></h4>
+        <p><span class="lang-fr">Laboratoire de sécurité offensive avec tests d'intrusion pour l'identification de vulnérabilités et mise en place de stratégies de durcissement sur Linux et Windows.</span><span class="lang-en">Offensive security lab with intrusion testing to identify vulnerabilities and implement hardening strategies on Linux and Windows.</span></p>
       </div>
       <div class="proj-card tilt">
         <span class="tag">Terraform · Kubernetes</span>
-        <h4>Infrastructure multi cloud</h4>
-        <p>Déploiement automatisé d'architectures Kubernetes sur Azure (AKS) et GCP, avec configuration de load balancers pour la disponibilité des services.</p>
+        <h4><span class="lang-fr">Infrastructure multi cloud</span><span class="lang-en">Multi-cloud infrastructure</span></h4>
+        <p><span class="lang-fr">Déploiement automatisé d'architectures Kubernetes sur Azure (AKS) et GCP, avec configuration de load balancers pour la disponibilité des services.</span><span class="lang-en">Automated deployment of Kubernetes architectures on Azure (AKS) and GCP, with load balancers configured for service availability.</span></p>
       </div>
       <div class="proj-card tilt">
         <span class="tag">Bash · YAD · Fedora</span>
         <h4>Monitoring SOC</h4>
-        <p>Dashboard de surveillance de processus Linux développé en Bash, optimisé pour la détection de comportements anormaux sur les hôtes.</p>
+        <p><span class="lang-fr">Dashboard de surveillance de processus Linux développé en Bash, optimisé pour la détection de comportements anormaux sur les hôtes.</span><span class="lang-en">Linux process-monitoring dashboard built in Bash, tuned to detect anomalous behavior on hosts.</span></p>
       </div>
       <div class="proj-card tilt">
         <span class="tag">GNS3 · FreePBX · Asterisk</span>
-        <h4>Infrastructure VoIP sécurisée</h4>
-        <p>Déploiement d'une solution VoIP complète avec FreePBX, Asterisk et Jitsi Meet, incluant la segmentation réseau des flux de communication en temps réel.</p>
+        <h4><span class="lang-fr">Infrastructure VoIP sécurisée</span><span class="lang-en">Secure VoIP infrastructure</span></h4>
+        <p><span class="lang-fr">Déploiement d'une solution VoIP complète avec FreePBX, Asterisk et Jitsi Meet, incluant la segmentation réseau des flux de communication en temps réel.</span><span class="lang-en">Deployed a full VoIP solution with FreePBX, Asterisk and Jitsi Meet, including network segmentation of real-time communication flows.</span></p>
       </div>
     </div>
   </section>
@@ -1035,23 +1071,23 @@
   <section id="certifications">
     <div class="section-head reveal">
       <span class="eyebrow">Certifications</span>
-      <h2 class="section-title">Formations complémentaires</h2>
+      <h2 class="section-title"><span class="lang-fr">Formations complémentaires</span><span class="lang-en">Additional training</span></h2>
     </div>
     <div class="cert-grid reveal">
       <div class="cert-card">
         <h4>Cisco Networking Academy</h4>
         <ul>
-          <li>Ethical Hacking (en cours de finalisation)</li>
-          <li>Introduction à la cybersécurité</li>
-          <li>Les bases du matériel informatique</li>
+          <li><span class="lang-fr">Ethical Hacking (en cours de finalisation)</span><span class="lang-en">Ethical Hacking (in progress)</span></li>
+          <li><span class="lang-fr">Introduction à la cybersécurité</span><span class="lang-en">Introduction to Cybersecurity</span></li>
+          <li><span class="lang-fr">Les bases du matériel informatique</span><span class="lang-en">IT Hardware Basics</span></li>
         </ul>
       </div>
       <div class="cert-card">
         <h4>Microsoft Learn</h4>
         <ul>
-          <li>Introduction à GitHub</li>
+          <li><span class="lang-fr">Introduction à GitHub</span><span class="lang-en">Introduction to GitHub</span></li>
           <li>Build cybersecurity resilience in K12 classrooms with Microsoft tools</li>
-          <li>Résoudre les problèmes de réseau local et hybride</li>
+          <li><span class="lang-fr">Résoudre les problèmes de réseau local et hybride</span><span class="lang-en">Troubleshooting local and hybrid networking</span></li>
         </ul>
       </div>
     </div>
@@ -1059,18 +1095,18 @@
 
   <section id="parcours">
     <div class="section-head reveal">
-      <span class="eyebrow">Formation</span>
-      <h2 class="section-title">Parcours académique</h2>
+      <span class="eyebrow"><span class="lang-fr">Formation</span><span class="lang-en">Education</span></span>
+      <h2 class="section-title"><span class="lang-fr">Parcours académique</span><span class="lang-en">Academic background</span></h2>
     </div>
     <div class="timeline reveal">
       <div class="tl-item">
-        <div class="when">2023 à 2026</div>
-        <h3>Bachelor Réseau et Sécurité Informatique</h3>
-        <p>Institut Supérieur Keyce Informatique et Management, Yaoundé. Première et deuxième années validées avec mention Bien. Mémoire de fin d'études sur une architecture Zero Trust appliquée à une PME industrielle.</p>
+        <div class="when">2023 <span class="lang-fr">à</span><span class="lang-en">to</span> 2026</div>
+        <h3><span class="lang-fr">Bachelor Réseau et Sécurité Informatique</span><span class="lang-en">Bachelor's in Network &amp; Information Security</span></h3>
+        <p><span class="lang-fr">Institut Supérieur Keyce Informatique et Management, Yaoundé. Première et deuxième années validées avec mention Bien. Mémoire de fin d'études sur une architecture Zero Trust appliquée à une PME industrielle.</span><span class="lang-en">Institut Supérieur Keyce Informatique et Management, Yaoundé. First and second years passed with honors. Capstone thesis on a Zero Trust architecture applied to an industrial SME.</span></p>
       </div>
       <div class="tl-item">
-        <div class="when">2016 à 2023</div>
-        <h3>Baccalauréat scientifique, spécialité mathématiques et sciences physiques</h3>
+        <div class="when">2016 <span class="lang-fr">à</span><span class="lang-en">to</span> 2023</div>
+        <h3><span class="lang-fr">Baccalauréat scientifique, spécialité mathématiques et sciences physiques</span><span class="lang-en">Scientific Baccalaureate, Mathematics &amp; Physical Sciences</span></h3>
         <p>Lycée de Nkolmesseng, Yaoundé.</p>
       </div>
     </div>
@@ -1078,10 +1114,11 @@
 
   <section id="contact">
     <div class="contact-panel reveal">
-      <h2>Discutons de ton prochain projet de sécurité</h2>
-      <p>Ouvert aux opportunités de stage en cybersécurité, réseaux ou architectures Zero Trust.</p>
+      <h2><span class="lang-fr">Discutons de ton prochain projet de sécurité</span><span class="lang-en">Let's talk about your next security project</span></h2>
+      <p><span class="lang-fr">Ouvert aux opportunités de stage en cybersécurité, réseaux ou architectures Zero Trust.</span><span class="lang-en">Open to internship opportunities in cybersecurity, networking or Zero Trust architectures.</span></p>
       <div class="contact-links">
         <a class="btn btn-primary" href="https://www.linkedin.com/in/dorian-batosine-ab8098322" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn btn-ghost" href="cv-batosine-tchouho-dorian.pdf" target="_blank" rel="noopener"><span class="lang-fr">CV (PDF)</span><span class="lang-en">Resume (PDF)</span> ↗</a>
         <a class="btn btn-ghost" href="https://github.com/Batohack" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="btn btn-ghost" href="mailto:batodorian3@gmail.com">Email ↗</a>
       </div>
@@ -1092,7 +1129,7 @@
     <div class="cyber-pulse"></div>
     <div class="identity-panel" role="dialog" aria-modal="true" aria-labelledby="identityTitle">
       <div class="identity-head">
-        <span class="identity-tag">Dossier sécurisé</span>
+        <span class="identity-tag"><span class="lang-fr">Dossier sécurisé</span><span class="lang-en">Classified file</span></span>
         <button class="identity-close" type="button" aria-label="Fermer">✕</button>
       </div>
       <div class="identity-body">
@@ -1100,9 +1137,12 @@
           <img src="portrait-batohack.jpg" alt="Portrait de Batohack" />
         </div>
         <div class="identity-meta">
-          <span class="subtitle">Hacker éthique</span>
+          <span class="subtitle"><span class="lang-fr">Hacker éthique</span><span class="lang-en">Ethical Hacker</span></span>
           <h2 id="identityTitle">Dorian Batosine Tchouho</h2>
-          <p>Chercheur en cybersécurité, pentester et passionné de sécurité cloud, je conçois des systèmes résilients, durcis les infrastructures et transforme le risque technique en protection mesurable.</p>
+          <p>
+            <span class="lang-fr">Chercheur en cybersécurité, pentester et passionné de sécurité cloud, je conçois des systèmes résilients, durcis les infrastructures et transforme le risque technique en protection mesurable.</span>
+            <span class="lang-en">Cybersecurity researcher, pentester and cloud security enthusiast, I design resilient systems, harden infrastructures and turn technical risk into measurable protection.</span>
+          </p>
           <div class="identity-badges">
             <span>Zero Trust</span>
             <span>Linux</span>
@@ -1155,6 +1195,7 @@
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.tabs');
   const themeToggle = document.querySelector('.theme-toggle');
+  const langToggle = document.querySelector('.lang-toggle');
 
   if (scrollTopBtn) {
     const toggleScrollButton = () => {
@@ -1233,6 +1274,24 @@
     themeToggle.addEventListener('click', () => {
       const isLight = !document.body.classList.contains('theme-light');
       applyTheme(isLight);
+    });
+  }
+
+  if (langToggle) {
+    const applyLang = (isEnglish) => {
+      document.body.classList.toggle('lang-english', isEnglish);
+      document.documentElement.lang = isEnglish ? 'en' : 'fr';
+      langToggle.textContent = isEnglish ? 'EN' : 'FR';
+      langToggle.setAttribute('aria-label', isEnglish ? 'Passer en français' : 'Switch to English');
+      localStorage.setItem('batohack-lang', isEnglish ? 'en' : 'fr');
+    };
+
+    const savedLang = localStorage.getItem('batohack-lang');
+    if (savedLang === 'en') applyLang(true);
+
+    langToggle.addEventListener('click', () => {
+      const isEnglish = !document.body.classList.contains('lang-english');
+      applyLang(isEnglish);
     });
   }
 </script>
